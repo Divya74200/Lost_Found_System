@@ -1,0 +1,13 @@
+# dependencies
+node_modules/
+
+# env files (secrets)
+.env
+backend/.env
+
+# build outputs
+build/
+dist/
+
+# OS / editor junk (optional)
+.DS_Store
