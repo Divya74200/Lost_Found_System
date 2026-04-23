@@ -3,17 +3,25 @@ import API from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
 
 function Register() {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      await API.post("/register", form);
+      const res = await API.post("/register", form);
+      console.log(res.data);
       alert("Registered successfully");
       navigate("/");
-    } catch {
-      alert("Error registering");
+    } catch (err) {
+      console.log(err.response?.data);
+      alert(err.response?.data?.message || "Error registering");
     }
   };
 
@@ -25,24 +33,35 @@ function Register() {
         <form onSubmit={handleSubmit}>
           <input
             className="form-control mb-3"
-            placeholder="Name"
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            placeholder="Username"
+            value={form.username}
+            onChange={(e) =>
+              setForm({ ...form, username: e.target.value })
+            }
           />
 
           <input
             className="form-control mb-3"
             placeholder="Email"
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            value={form.email}
+            onChange={(e) =>
+              setForm({ ...form, email: e.target.value })
+            }
           />
 
           <input
             type="password"
             className="form-control mb-3"
             placeholder="Password"
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            value={form.password}
+            onChange={(e) =>
+              setForm({ ...form, password: e.target.value })
+            }
           />
 
-          <button className="btn btn-success w-100">Register</button>
+          <button className="btn btn-success w-100">
+            Register
+          </button>
         </form>
 
         <p className="mt-3 text-center">
