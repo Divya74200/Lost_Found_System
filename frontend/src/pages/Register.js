@@ -11,16 +11,17 @@ function Register() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    console.log("CLICK WORKING");
 
     try {
       const res = await API.post("/register", form);
-      console.log(res.data);
+      console.log("SUCCESS:", res.data);
       alert("Registered successfully");
       navigate("/");
     } catch (err) {
-      console.log(err.response?.data);
+      console.log("ERROR:", err);
+      console.log("ERROR DATA:", err.response?.data);
       alert(err.response?.data?.message || "Error registering");
     }
   };
@@ -30,7 +31,8 @@ function Register() {
       <div className="card p-4 shadow" style={{ width: "350px" }}>
         <h3 className="text-center mb-3">Register</h3>
 
-        <form onSubmit={handleSubmit}>
+        {/* NO FORM SUBMIT — direct click */}
+        <div>
           <input
             className="form-control mb-3"
             placeholder="Username"
@@ -59,10 +61,14 @@ function Register() {
             }
           />
 
-          <button className="btn btn-success w-100">
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className="btn btn-success w-100"
+          >
             Register
           </button>
-        </form>
+        </div>
 
         <p className="mt-3 text-center">
           Already have an account? <Link to="/">Login</Link>
